@@ -5,6 +5,8 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { MantineProvider } from '@mantine/core';
+import { CustomFonts } from './fonts';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -12,7 +14,10 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <MantineProvider theme={{ fontFamily: "Poppins, sans-serif" }}>
+        <CustomFonts />
+        <App />
+      </MantineProvider>
     </Provider>
   </React.StrictMode>
 );
