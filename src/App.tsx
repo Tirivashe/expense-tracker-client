@@ -1,11 +1,17 @@
-import { Center, Container, Grid, SimpleGrid, Text, Title } from "@mantine/core";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthenticationPage, DashboardPage } from "./pages";
 
 
 function App() {
   return (
-    <div>
-      
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/*">
+          <Route path="auth" element={<AuthenticationPage />} />
+          <Route index element={<DashboardPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
