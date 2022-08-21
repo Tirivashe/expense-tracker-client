@@ -1,8 +1,9 @@
 import { createStyles } from "@mantine/core";
 
-export const useStyles = createStyles((theme) => ({
+export const useStyles = createStyles(() => ({
   mainStack: {
-    maxWidth: "20%",
+    width: "23rem",
+    padding: "0 2rem",
     height: "90vh",
     margin: "0 auto",
   },
