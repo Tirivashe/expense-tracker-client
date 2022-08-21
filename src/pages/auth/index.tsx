@@ -8,7 +8,7 @@ import { useStyles } from "./styles";
 
 const AuthenticationPage: FC = () => {
   const { classes } = useStyles();
-  const { getInputProps: getInputPropsLogin, onSubmit: onSubmitLogin, errors: loginErrors } =
+  const { getInputProps: getInputPropsLogin, onSubmit: onSubmitLogin } =
     useForm<LoginFormValues>({
       initialValues: {
         loginEmail: "",
@@ -17,7 +17,7 @@ const AuthenticationPage: FC = () => {
       validate: zodResolver(loginSchema)
     });
 
-  const { getInputProps: getInputPropsRegister, onSubmit: onSubmitRegister, errors: registerErrors } =
+  const { getInputProps: getInputPropsRegister, onSubmit: onSubmitRegister } =
     useForm<RegisterFormValues>({
       initialValues: {
         registerEmail: "",
