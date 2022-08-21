@@ -1,10 +1,21 @@
-import React from 'react'
+import { Stack, Text } from '@mantine/core'
+import { FC } from 'react'
+import { CategoriesSummary, Search } from '../../components'
+import { useStyles } from './style'
 
 type Props = {}
 
-const Dashboard = (props: Props) => {
+const Dashboard: FC<Props> = () => {
+  const { classes } = useStyles()
   return (
-    <div>Dashboard</div>
+    <Stack className={ classes.root }>
+      <Search />
+      <Stack justify="space-between" className={classes.categoriesSummary}>
+        <Text className={ classes.summaryText }>Categories Last 30 Days</Text>
+        <CategoriesSummary />
+      </Stack>
+
+    </Stack>
   )
 }
 
