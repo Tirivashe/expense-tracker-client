@@ -1,2 +1,6 @@
 export { default as AuthenticationPage } from "./auth"
 export { default as DashboardPage } from "./dashboard"
+export { default as CategoriesPage } from "./categories"
+export { default as TransactionsPage } from "./transactions"
+export { default as ProfilePage } from "./profile"
+export { default as SettingsPage } from "./settings"
