@@ -14,7 +14,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <MantineProvider theme={{ fontFamily: "Poppins, sans-serif" }}>
+      <MantineProvider theme={{ fontFamily: "Nunito, sans-serif" }}>
         <CustomFonts />
         <App />
       </MantineProvider>

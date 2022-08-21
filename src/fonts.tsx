@@ -6,8 +6,8 @@ export function CustomFonts() {
       styles={[
         {
           "@font-face": {
-            fontFamily: "Poppins",
-            src: `url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');`,
+            fontFamily: "Nunito",
+            src: `url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');`,
             fontWeight: 400,
             fontStyle: "normal",
           },
