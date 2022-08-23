@@ -1,4 +1,4 @@
-import { Navbar, NavLink, Stack, Text, Title } from '@mantine/core'
+import { Navbar, NavLink, Stack, Title } from '@mantine/core'
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useStyles } from './styles'

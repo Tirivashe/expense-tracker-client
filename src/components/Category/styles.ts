@@ -5,8 +5,6 @@ export const useStyles = createStyles((_theme, { color }: { color: string }) => 
     background: color,
     height: "4rem",
     width: "auto",
-    display: "flex",
-    padding: "0.5rem 1.2rem",
     borderRadius: "5px",
   },
 }));

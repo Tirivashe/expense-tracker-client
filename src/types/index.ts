@@ -23,5 +23,6 @@ export type CategorySummary = {
 export type Transaction = {
   name: string,
   category: Categories,
-  date: Date
+  expense: number,
+  createdAt: Date
 }
