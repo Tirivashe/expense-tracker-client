@@ -1,6 +1,6 @@
 import { Stack, Text } from '@mantine/core'
 import React from 'react'
-import { Categories, Transaction as TransactionType } from '../../types'
+import { Categories, TransactionType } from '../../types'
 import { Transaction } from "../../components"
 
 type Props = {}
@@ -40,10 +40,10 @@ const transactions: TransactionType[] = [
 
 const LatestTransactions = (props: Props) => {
   return (
-    <Stack mt={40} justify="start" sx={{ width: "inherit" }}>
+    <Stack mt={40} justify="start">
       <Text size="lg">Latest Transactions</Text>
       {transactions.map(transaction => (
-        <Transaction transaction={transaction}/>
+        <Transaction key={transaction.name} transaction={transaction}/>
       ))}
     </Stack>
   )

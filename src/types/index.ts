@@ -20,7 +20,7 @@ export type CategorySummary = {
   totalExpense: number,
 }
 
-export type Transaction = {
+export type TransactionType = {
   name: string,
   category: Categories,
   expense: number,

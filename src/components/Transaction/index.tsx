@@ -1,6 +1,6 @@
 import { Group, Paper, Stack, Text, useMantineTheme } from '@mantine/core';
 import React, { FC } from 'react'
-import { Transaction as TransactionType } from '../../types'
+import { TransactionType } from '../../types'
 import { renderColor } from '../../utils';
 
 type Props = {

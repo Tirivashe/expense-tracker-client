@@ -1,4 +1,5 @@
 import { Navbar, NavLink, Stack, Title } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useStyles } from './styles'
@@ -6,10 +7,12 @@ import { useStyles } from './styles'
 type Props = {}
 
 const AppNavbar: FC<Props> = () => {
+  const isMobile = useMediaQuery("(max-width: 1345px)");
+
   const { classes } = useStyles()
   const { pathname } = useLocation()
   return (
-    <Navbar width={{ base: 270 }} pt="lg" withBorder={false} hidden hiddenBreakpoint="sm">
+    <Navbar width={{ base: 270 }} pt="lg" withBorder={false} hidden={isMobile} hiddenBreakpoint={1345}>
       <Stack align="end" sx={{ width: "100%" }} spacing="xl" justify="space-between">
         <Title sx={{ fontFamily: "Nunito", letterSpacing: "1px" }} order={2}>
           Tracker
