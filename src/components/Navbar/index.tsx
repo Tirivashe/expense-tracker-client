@@ -3,14 +3,21 @@ import { useMediaQuery } from '@mantine/hooks'
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useStyles } from './styles'
+import { useLogoutMutation } from "../../redux/api/auth/authApiSlice" 
 
 type Props = {}
 
 const AppNavbar: FC<Props> = () => {
   const isMobile = useMediaQuery("(max-width: 1345px)");
+  const [logout, { isSuccess }] = useLogoutMutation()
 
   const { classes } = useStyles()
   const { pathname } = useLocation()
+
+  const logoutUser = () => {
+    logout()
+  }
+
   return (
     <Navbar width={{ base: 270 }} pt="lg" withBorder={false} hidden={isMobile} hiddenBreakpoint={1345}>
       <Stack align="end" sx={{ width: "100%" }} spacing="xl" justify="space-between">
@@ -48,7 +55,8 @@ const AppNavbar: FC<Props> = () => {
           <NavLink
             label="Logout"
             component={Link}
-            to="/auth"
+            onClick={logoutUser}
+            to={isSuccess ? "/auth" : "#"}
             replace
             className={ classes.links }
            />

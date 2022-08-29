@@ -4,9 +4,16 @@ import { FC } from "react";
 import { RegisterFormValues, LoginFormValues } from "../../types";
 import { loginSchema, registerSchema } from "./schema";
 import { useStyles } from "./styles";
-
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "../../redux/api/auth/authApiSlice";
+import { AuthDto } from "../../redux/api/dto/auth.dto";
+import { Navigate } from "react-router-dom";
 
 const AuthenticationPage: FC = () => {
+  const [login, { isSuccess: isLoginSuccess }] = useLoginMutation();
+  const [register, { isSuccess: isRegistrationSuccess }] = useRegisterMutation();
   const { classes } = useStyles();
   const { getInputProps: getInputPropsLogin, onSubmit: onSubmitLogin } =
     useForm<LoginFormValues>({
@@ -14,7 +21,7 @@ const AuthenticationPage: FC = () => {
         loginEmail: "",
         loginPassword: "",
       },
-      validate: zodResolver(loginSchema)
+      validate: zodResolver(loginSchema),
     });
 
   const { getInputProps: getInputPropsRegister, onSubmit: onSubmitRegister } =
@@ -23,18 +30,27 @@ const AuthenticationPage: FC = () => {
         registerEmail: "",
         registerPassword: "",
       },
-      validate: zodResolver(registerSchema)
+      validate: zodResolver(registerSchema),
     });
+  
+  const handleLoginSubmit = (values: LoginFormValues) => {
+    const credentials: AuthDto = { email: values.loginEmail, password: values.loginPassword }
+    login(credentials)
+  }
+
+  const handleRegisterSubmit = (values: RegisterFormValues) => {
+    const credentials: AuthDto = { email: values.registerEmail, password: values.registerPassword }
+    register(credentials)
+  }
+  
+  if(isRegistrationSuccess) return <Navigate to="/" replace={true}/>
+  if(isLoginSuccess) return <Navigate to="/" replace={true}/>
+
   return (
     <Stack className={classes.mainStack} justify="space-around" align="center">
       <form
         className={classes.containerStack}
-        onSubmit={onSubmitLogin((values) =>
-          console.log("Login values: ", {
-            email: values.loginEmail,
-            password: values.loginPassword,
-          })
-        )}
+        onSubmit={onSubmitLogin(handleLoginSubmit)}
       >
         <Stack justify="center" spacing="lg" className={classes.containerStack}>
           <Title order={3} align="center">
@@ -45,6 +61,7 @@ const AuthenticationPage: FC = () => {
             type="email"
             variant="filled"
             placeholder="e.g. example@email.com"
+            required
             {...getInputPropsLogin("loginEmail")}
           />
           <TextInput
@@ -60,12 +77,7 @@ const AuthenticationPage: FC = () => {
       </form>
       <form
         className={classes.containerStack}
-        onSubmit={onSubmitRegister((values) =>
-          console.log("Registration values: ", {
-            email: values.registerEmail,
-            password: values.registerPassword,
-          })
-        )}
+        onSubmit={onSubmitRegister(handleRegisterSubmit)}
       >
         <Stack justify="center" spacing="lg" className={classes.containerStack}>
           <Title order={3} align="center">
