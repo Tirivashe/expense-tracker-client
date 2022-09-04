@@ -1,6 +1,11 @@
 import { Button, Stack, Text, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 import React, { FC } from "react";
+import { useEffect } from "react";
+import { BsCheck2 } from "react-icons/bs";
+import { MdClose } from "react-icons/md";
+import { useEditProfileMutation } from "../../redux/api/user";
 
 type Props = {};
 
@@ -10,6 +15,8 @@ type FormValues = {
 };
 
 const ProfilePage: FC<Props> = () => {
+  const [editProfile, { isLoading, isSuccess, isError }] =
+    useEditProfileMutation();
   const { getInputProps, onSubmit } = useForm<FormValues>({
     initialValues: {
       firstName: "",
@@ -22,8 +29,31 @@ const ProfilePage: FC<Props> = () => {
   });
 
   const handleSubmit = (values: FormValues) => {
-    console.log(values);
+    editProfile(values);
   };
+
+  useEffect(() => {
+    isSuccess &&
+      showNotification({
+        id: "edit-profile-success",
+        title: "Success",
+        message: "Profile successfully updated",
+        color: "teal",
+        icon: <BsCheck2 size={20} color="white" />,
+        autoClose: 3500,
+        disallowClose: false,
+      });
+    isError &&
+      showNotification({
+        id: "edit-profile-error",
+        title: "Error",
+        message: "Couldn't update your profile",
+        color: "red",
+        icon: <MdClose size={20} color="white" />,
+        autoClose: 3500,
+        disallowClose: false,
+      });
+  }, [isSuccess, isError]);
 
   return (
     <Stack ml={30}>
@@ -41,8 +71,8 @@ const ProfilePage: FC<Props> = () => {
             {...getInputProps("lastName")}
           />
         </Stack>
-        <Button mt={15} type="submit">
-          Update Info
+        <Button mt={15} type="submit" loading={isLoading}>
+          {isLoading ? "Updating profile..." : "Update Info"}
         </Button>
       </form>
     </Stack>

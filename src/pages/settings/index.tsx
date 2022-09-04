@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import React, { FC, useEffect } from "react";
 import { BsCheck2 } from "react-icons/bs";
+import { MdClose } from "react-icons/md";
 import { useResetPasswordMutation } from "../../redux/api/auth/authApiSlice";
 
 type Props = {};
@@ -48,8 +49,20 @@ const SettingsPage: FC<Props> = () => {
         disallowClose: false,
       });
     }
-    
-  }, [isSuccess])
+    isError &&
+      error !== undefined &&
+      "data" in error &&
+      error.status !== 403 &&
+      showNotification({
+        id: "edit-profile-error",
+        title: "Error",
+        message: "Something went wrong. Please try again later",
+        color: "red",
+        icon: <MdClose size={20} color="white" />,
+        autoClose: 3500,
+        disallowClose: false,
+      });
+  }, [isSuccess, isError, error])
 
 
   return (

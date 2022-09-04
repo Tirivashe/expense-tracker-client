@@ -2,7 +2,7 @@ import { Button, NumberInput, Select, Stack, Text, TextInput } from "@mantine/co
 import { DatePicker } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification, updateNotification } from "@mantine/notifications";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { BsCheck2 } from "react-icons/bs";
 import { MdClose, MdDateRange } from "react-icons/md";
 import { addTransactionSchema } from "../../pages/transactions/schema";
@@ -43,38 +43,40 @@ const AddTransactionForm: FC<Props> = () => {
      });
    };
 
-   if (isLoading) {
-     showNotification({
-       id: "update-notification",
-       title: "Adding Transaction...",
-       message: "Please wait while we add your transaction",
-       loading: isLoading,
-       autoClose: isSuccess,
-       disallowClose: true,
-     });
-   }
-   if (isSuccess) {
-     updateNotification({
-       id: "update-notification",
-       title: "Transaction Added",
-       message: "Successfully added a new transaction!",
-       color: "teal",
-       icon: <BsCheck2 size={20} color="white" />,
-       autoClose: 3500,
-       disallowClose: false,
-     });
-   }
-   if (isError) {
-     updateNotification({
-       id: "update-notification",
-       title: "Error",
-       message: "Something went wrong! Cannot add transaction",
-       color: "red",
-       icon: <MdClose size={20} color="white" />,
-       autoClose: 5000,
-       disallowClose: false,
-     });
-   }
+   useEffect(() => {
+     if (isLoading) {
+       showNotification({
+         id: "update-notification",
+         title: "Adding Transaction...",
+         message: "Please wait while we add your transaction",
+         loading: isLoading,
+         autoClose: isSuccess,
+         disallowClose: true,
+       });
+     }
+     if (isSuccess) {
+       updateNotification({
+         id: "update-notification",
+         title: "Transaction Added",
+         message: "Successfully added a new transaction!",
+         color: "teal",
+         icon: <BsCheck2 size={20} color="white" />,
+         autoClose: 3500,
+         disallowClose: false,
+       });
+     }
+     if (isError) {
+       updateNotification({
+         id: "update-notification",
+         title: "Error",
+         message: "Something went wrong! Cannot add transaction",
+         color: "red",
+         icon: <MdClose size={20} color="white" />,
+         autoClose: 5000,
+         disallowClose: false,
+       });
+     }
+   }, [isLoading, isSuccess, isError])
 
   return (
     <Stack sx={{ width: "inherit" }}>

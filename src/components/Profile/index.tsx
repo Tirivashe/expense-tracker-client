@@ -1,14 +1,17 @@
 import { Avatar, Group, Stack, Text, useMantineTheme } from '@mantine/core'
-import React from 'react'
+import React, { FC } from 'react'
 import { BiCog } from 'react-icons/bi'
 import { BsPencil, BsWallet2 } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
+import { useSelector } from '../../app/hooks'
+import { selectUser } from '../../redux/appState/appStateSlice'
 import { useStyles } from './styles'
 
 type Props = {}
 
-const Profile = (props: Props) => {
+const Profile: FC<Props> = () => {
   const { classes } = useStyles()
+  const { firstName, lastName } = useSelector(selectUser)
   const theme = useMantineTheme()
   return (
     <Stack
@@ -22,7 +25,7 @@ const Profile = (props: Props) => {
       <Text size="sm" align="center">
         Hi{" "}
         <Text size="sm" component="span" weight="bold">
-          Morgan Stanley 
+          {`${firstName} ${lastName}`}
         </Text>
       </Text>
       <Group position="apart" sx={{ width: "inherit" }}>
