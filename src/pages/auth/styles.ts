@@ -6,8 +6,5 @@ export const useStyles = createStyles(() => ({
     padding: "0 2rem",
     height: "90vh",
     margin: "0 auto",
-  },
-  containerStack: {
-    width: "100%"
-  },
+  }
 }));

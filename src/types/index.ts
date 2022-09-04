@@ -1,12 +1,7 @@
-export type LoginFormValues = {
-  loginEmail: string,
-  loginPassword: string,
+export type FormCredentials = {
+  email: string,
+  password: string,
 }
-
-export type RegisterFormValues = {
-  registerEmail: string;
-  registerPassword: string;
-};
 
 export enum Categories {
   PRODUCTS = "PRODUCTS",
