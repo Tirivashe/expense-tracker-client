@@ -9,20 +9,23 @@ export type RegisterFormValues = {
 };
 
 export enum Categories {
-  PRODUCTS = "Products",
-  ENTERTAINMENT = "Entertainment",
-  BILLS = "Bills",
-  OTHER = "Other"
+  PRODUCTS = "PRODUCTS",
+  ENTERTAINMENT = "ENTERTAINMENT",
+  BILLS = "BILLS",
+  OTHER = "OTHER"
 }
 
 export type CategorySummary = {
-  name: Categories,
-  totalExpense: number,
-}
+  category: Categories;
+  _sum: {
+    expense: number;
+  };
+};
 
 export type TransactionType = {
+  id: string,
   name: string,
   category: Categories,
   expense: number,
-  createdAt: Date
+  createdAt: string
 }

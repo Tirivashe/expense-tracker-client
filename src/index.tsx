@@ -7,18 +7,21 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { MantineProvider } from '@mantine/core';
 import { CustomFonts } from './fonts';
+import { NotificationsProvider } from "@mantine/notifications"
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <MantineProvider theme={{ fontFamily: "Nunito, sans-serif" }}>
-        <CustomFonts />
-        <App />
-      </MantineProvider>
-    </Provider>
+    <NotificationsProvider>
+      <Provider store={store}>
+        <MantineProvider theme={{ fontFamily: "Nunito, sans-serif" }}>
+          <CustomFonts />
+          <App />
+        </MantineProvider>
+      </Provider>
+    </NotificationsProvider>
   </React.StrictMode>
 );
 

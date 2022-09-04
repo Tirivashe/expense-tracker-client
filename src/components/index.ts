@@ -5,5 +5,6 @@ export { default as Category } from "./Category"
 export { default as LatestTransactions } from "./LatestTransactions"
 export { default as Transaction } from "./Transaction"
 export { default as Profile } from "./Profile"
-export { default as AppAside } from "./Aside"
 export { default as FilterSelector } from "./FilterSelector";
+export { default as DeleteTransactionList } from "./DeleteTransactionsList"
+export { default as TransactionFilter } from "./TransactionFilter"

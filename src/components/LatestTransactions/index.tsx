@@ -1,52 +1,31 @@
-import { Stack, Text } from '@mantine/core'
-import React from 'react'
-import { Categories, TransactionType } from '../../types'
-import { Transaction } from "../../components"
+import { Stack, Text } from "@mantine/core";
+import { Transaction } from "../../components";
+import { useGetAllTransactionsQuery } from "../../redux/api/transaction";
+import { FC } from "react";
 
-type Props = {}
 
-const transactions: TransactionType[] = [
-  {
-    name: "Hi",
-    category: Categories.PRODUCTS,
-    expense: 2110,
-    createdAt: new Date(),
-  },
-  {
-    name: "Test",
-    category: Categories.BILLS,
-    expense: 205,
-    createdAt: new Date(),
-  },
-  {
-    name: "New",
-    category: Categories.ENTERTAINMENT,
-    expense: 100,
-    createdAt: new Date(),
-  },
-  {
-    name: "Hello",
-    category: Categories.BILLS,
-    expense: 150,
-    createdAt: new Date(),
-  },
-  {
-    name: "Other",
-    category: Categories.OTHER,
-    expense: 200,
-    createdAt: new Date(),
-  },
-];
+const LatestTransactions: FC = () => {
+  const {
+    data: transactions,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetAllTransactionsQuery();
 
-const LatestTransactions = (props: Props) => {
-  return (
-    <Stack mt={40} justify="start">
-      <Text size="lg">Latest Transactions</Text>
-      {transactions.map(transaction => (
-        <Transaction key={transaction.name} transaction={transaction}/>
-      ))}
-    </Stack>
-  )
-}
+  if (isLoading) return <h2>Loading up transactions...</h2>;
+  if (isError) return <h2>Something went terribly wrong</h2>;
 
-export default LatestTransactions
+  if (isSuccess)
+    return (
+      <Stack mt={40} justify="start">
+        <Text size="lg">Latest Transactions</Text>
+        {transactions.map((transaction) => (
+          <Transaction key={transaction.id} transaction={transaction} />
+        ))}
+      </Stack>
+    );
+
+  return null;
+};
+
+export default LatestTransactions;

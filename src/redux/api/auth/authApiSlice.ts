@@ -22,6 +22,14 @@ export const authApiSlice = api.injectEndpoints({
         url: "/auth/logout",
         method: "POST",
       }),
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          dispatch(api.util.resetApiState())
+        } catch (error) {
+          console.error(error)
+        }
+      }
     }),
   }),
 });

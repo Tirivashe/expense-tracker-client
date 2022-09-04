@@ -7,18 +7,23 @@ import {
   TextInput,
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
-import { useForm, zodResolver } from "@mantine/form";
-import { FC } from "react";
-import { z } from "zod";
+import { useForm, zodResolver } from '@mantine/form';
+import { showNotification, updateNotification } from "@mantine/notifications"
+import { FC, useEffect } from "react";
 import { Categories } from "../../types";
 import { MdDateRange } from "react-icons/md";
+import { BsCheck2 } from "react-icons/bs";
+import { MdClose } from "react-icons/md";
+import { useCreateTransactionMutation, useGetTransactionsToDeleteMutation } from "../../redux/api/transaction";
+import { DeleteTransactionList } from "../../components"
+import { addTransactionSchema, deleteTransactionsSchema } from "./schema";
 
 type Props = {};
 
 type AddTransactionFieldValues = {
   name: string;
   expense: number;
-  date: Date;
+  createdAt: Date;
   category: Categories;
 };
 
@@ -27,37 +32,9 @@ type DeleteTransactionFieldValues = {
   to: Date;
 };
 
-const addTransactionSchema = z
-  .object({
-    name: z.string().min(1, "Please enter the name of the transaction"),
-    expense: z
-      .number({ invalid_type_error: "Enter a valid number" })
-      .positive({ message: "Enter a valid amount" }),
-    date: z.date({ invalid_type_error: "Enter a valid date" }),
-  })
-  .refine((schema) => schema.date.getTime() <= new Date().getTime(), {
-    message: "Oops, this is in the future",
-    path: ["date"],
-  });
-
-//Todo: make sure the from date is smaller that to date and that both dates do not exceed current moment
-const deleteTransactionsSchema = z
-  .object({
-    from: z.date({ invalid_type_error: "Enter a valid date" }),
-    to: z.date({ invalid_type_error: "Enter a valid date" }),
-  })
-  .refine((schema) => schema.from.getTime() <= schema.to.getTime(), {
-    message: "Make sure 'from' date is sooner to 'to' date",
-    path: ["to"],
-  }).refine(schema => schema.from.getTime() <= new Date().getTime(), {
-    message: "Oops, this is in the future",
-    path: ["from"]
-  }).refine(schema => schema.to.getTime() <= new Date().getTime(), {
-    message: "Oops, this is in the future",
-    path: ["to"]
-  })
-
 const TransactionsPage: FC<Props> = () => {
+  const [createTransaction, { isLoading, isSuccess, isError }] = useCreateTransactionMutation()
+  const [ showTransactionsToDelete, { data, isSuccess: isGetDeleteTransactionsSuccess,  } ] = useGetTransactionsToDeleteMutation()
   const {
     getInputProps: addTransactionInputProps,
     onSubmit: onSubmitAddTransaction,
@@ -65,7 +42,7 @@ const TransactionsPage: FC<Props> = () => {
     initialValues: {
       name: "",
       expense: 0,
-      date: new Date(),
+      createdAt: new Date(),
       category: Categories.PRODUCTS,
     },
     validate: zodResolver(addTransactionSchema),
@@ -74,6 +51,7 @@ const TransactionsPage: FC<Props> = () => {
   const {
     getInputProps: getDeleteTransactionsProps,
     onSubmit: onSubmitDeleteTransactions,
+    values: deleteFormValues
   } = useForm<DeleteTransactionFieldValues>({
     initialValues: {
       from: new Date(),
@@ -83,17 +61,79 @@ const TransactionsPage: FC<Props> = () => {
   });
 
   const handleAddTransactionSubmit = (values: AddTransactionFieldValues) => {
-    console.log("Add transaction: ", {
-      ...values,
-      date: values.date.toISOString(),
-    });
+    createTransaction({ name: values.name, category: values.category, expense: values.expense, createdAt: values.createdAt });
   };
 
   const handleDeleteTransactionsSubmit = (
     values: DeleteTransactionFieldValues
   ) => {
-    console.log("Add transaction: ", values);
+    showTransactionsToDelete(values)
   };
+
+  if(isLoading) {
+    showNotification({
+      id: "update-notification",
+      title: "Adding Transaction...",
+      message: "Please wait while we add your transaction",
+      loading: isLoading,
+      autoClose: isSuccess,
+      disallowClose: true,
+    });
+  }
+  if(isSuccess) {
+    updateNotification({
+      id: "update-notification",
+      title: "Transaction Added",
+      message: "Successfully added a new transaction!",
+      color: "teal",
+      icon: <BsCheck2 size={20} color="white" />,
+      autoClose: 3500,
+      disallowClose: false,
+    });
+  }
+  if(isError) {
+    updateNotification({
+      id: "update-notification",
+      title: "Error",
+      message: "Something went wrong! Cannot add transaction",
+      color: "red",
+      icon: <MdClose size={20} color="white" />,
+      autoClose: 5000,
+      disallowClose: false,
+    });
+  }
+
+  // useEffect(() => {
+  //   isLoading &&
+  //     showNotification({
+  //       id: "update-notification",
+  //       title: "Adding Transaction...",
+  //       message: "Please wait while we add your transaction",
+  //       loading: isLoading,
+  //       autoClose: isSuccess,
+  //       disallowClose: true,
+  //     });
+  //   isSuccess &&
+  //     updateNotification({
+  //       id: "update-notification",
+  //       title: "Transaction Added",
+  //       message: "Successfully added a new transaction!",
+  //       color: "teal",
+  //       icon: <BsCheck2 size={20} color="white" />,
+  //       autoClose: 3500,
+  //       disallowClose: false,
+  //     });
+  //   isError &&
+  //     updateNotification({
+  //       id: "update-notification",
+  //       title: "Error",
+  //       message: "Something went wrong! Cannot add transaction",
+  //       color: "red",
+  //       icon: <MdClose size={20} color="white" />,
+  //       autoClose: 5000,
+  //       disallowClose: false,
+  //     });
+  // }, [isSuccess, isError, isLoading])
 
   return (
     <Stack ml={50} align="start" sx={{ width: "50%" }}>
@@ -125,7 +165,7 @@ const TransactionsPage: FC<Props> = () => {
               inputFormat="MM/DD/YYYY"
               defaultValue={new Date()}
               rightSection={<MdDateRange />}
-              {...addTransactionInputProps("date")}
+              {...addTransactionInputProps("createdAt")}
             />
             <Select
               placeholder="Products"
@@ -170,6 +210,13 @@ const TransactionsPage: FC<Props> = () => {
           </Button>
         </form>
       </Stack>
+      {(isGetDeleteTransactionsSuccess && data) && 
+        <DeleteTransactionList 
+          transactions={data} 
+          formValues={deleteFormValues} 
+          refetch={showTransactionsToDelete}
+        />
+        }
     </Stack>
   );
 };

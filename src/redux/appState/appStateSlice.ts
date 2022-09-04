@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { authApiSlice } from "../api/auth/authApiSlice";
 import { reauthTokenReceived, logout } from "./customActions"
@@ -21,12 +21,6 @@ export const AppStateSlice = createSlice({
     toggleAside: (state: AppState) => {
       state.openAside = !state.openAside
     },
-    // reauthTokenReceived: (state: AppState, action: PayloadAction<{ access_token: string }>) => {
-    //   state.access_token = action.payload.access_token
-    // },
-    // logout: (state: AppState) => {
-    //   state.access_token = null
-    // }
   },
   extraReducers: (builder) => {
     builder.addCase(reauthTokenReceived, (state, action) => {

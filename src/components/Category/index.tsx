@@ -8,9 +8,9 @@ type Props = {
   category: CategorySummary;
 };
 
-const Category: FC<Props> = ({ category }) => {
+const Category: FC<Props> = ({ category: { category, _sum: { expense } } }) => {
   const theme = useMantineTheme();
-  const { color, Icon } = renderColor(category.name, theme);
+  const { color, Icon } = renderColor(category, theme);
   const { classes } = useStyles({ color })
   
   return (
@@ -21,8 +21,8 @@ const Category: FC<Props> = ({ category }) => {
         </Center>
         <Space w={15} />
         <Stack justify="center" sx={{ color: "white" }} spacing={0}>
-          <Text size="sm">{category.name}</Text>
-          <Text size="xs">-${category.totalExpense}</Text>
+          <Text size="sm">{category}</Text>
+          <Text size="xs">-${expense}</Text>
         </Stack>
       </Group>
     </Paper>

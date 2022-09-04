@@ -1,7 +1,7 @@
 import { AppShell } from "@mantine/core";
 import React, { FC } from "react";
 import { Outlet } from "react-router-dom";
-import { AppAside, AppNavbar } from "../components";
+import { AppNavbar } from "../components";
 
 type Props = {};
 
