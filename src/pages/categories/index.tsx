@@ -1,10 +1,8 @@
-import { Button, Group, Stack, Text } from "@mantine/core";
+import { Button, Stack, Text } from "@mantine/core";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { FC, useCallback, useState } from "react";
-import { FilterSelector, Transaction, TransactionFilter } from "../../components";
+import { Transaction, TransactionFilter } from "../../components";
 import { useGetFilteredTransactionsQuery } from "../../redux/api/transaction";
-import { Categories } from "../../types";
-
 type Props = {};
 
 const CategoriesPage: FC<Props> = () => {

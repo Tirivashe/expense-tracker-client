@@ -8,3 +8,5 @@ export { default as Profile } from "./Profile"
 export { default as FilterSelector } from "./FilterSelector";
 export { default as DeleteTransactionList } from "./DeleteTransactionsList"
 export { default as TransactionFilter } from "./TransactionFilter"
+export { default as AddTransactionForm } from "./AddTransactionForm"
+export { default as DeleteTransactionForm } from "./DeleteTransactionForm"

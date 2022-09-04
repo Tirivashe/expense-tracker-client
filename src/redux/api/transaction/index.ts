@@ -1,5 +1,5 @@
 import { api } from "..";
-import { Categories, CategorySummary, TransactionType } from "../../../types";
+import { CategorySummary, TransactionType } from "../../../types";
 import { CreateTransactionDto } from "../dto/create-transaction.dto";
 import { DeletingTransactionsDto } from "../dto/delete-transactions.dto";
 

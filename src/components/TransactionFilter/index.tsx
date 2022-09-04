@@ -1,5 +1,4 @@
 import { Group } from '@mantine/core';
-import React from 'react'
 import { FC } from 'react';
 import { Categories } from '../../types';
 import FilterSelector from '../FilterSelector';
