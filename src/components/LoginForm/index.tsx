@@ -1,4 +1,4 @@
-import { Button, Stack, TextInput, Title } from "@mantine/core";
+import { Button, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import React, { FC } from "react";
 import { Navigate } from "react-router-dom";
@@ -11,7 +11,7 @@ import { useStyles } from "./styles";
 type Props = {};
 
 const LoginForm: FC<Props> = () => {
-  const [login, { isSuccess }] = useLoginMutation();
+  const [login, { isSuccess, isError, error }] = useLoginMutation();
   const { classes } = useStyles();
   const { getInputProps, onSubmit } = useForm<FormCredentials>({
     initialValues: {
@@ -52,6 +52,9 @@ const LoginForm: FC<Props> = () => {
           required
           {...getInputProps("password")}
         />
+        {isError && error !== undefined && "data" in error && error.status === 403 && (
+          <Text size="xs" mt={-10} mb={-10} py={0} color="red">Invalid credentials</Text>
+        )}
         <Button type="submit">Login</Button>
       </Stack>
     </form>
