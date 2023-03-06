@@ -10,7 +10,7 @@ export const authApiSlice = api.injectEndpoints({
         body: credentials,
       }),
     }),
-    login: build.mutation<{ access_token: string }, AuthDto>({
+    login: build.mutation<{ access_token: string },AuthDto>({
       query: (credentials) => ({
         url: "/auth/login",
         method: "POST",
