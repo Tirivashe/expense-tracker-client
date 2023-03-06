@@ -8,7 +8,7 @@ import { reauthTokenReceived, logout } from "../appState/customActions";
 import { RootState } from "../../app/store";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://expense-tracker-server.up.railway.app/api",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).applicationState.access_token;
 

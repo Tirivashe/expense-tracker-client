@@ -92,6 +92,7 @@ const AddTransactionForm: FC<Props> = () => {
             variant="filled"
             placeholder="Expense"
             defaultValue={0}
+            precision={2}
             parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
             formatter={(value) =>
               !Number.isNaN(parseFloat(value ?? ""))
