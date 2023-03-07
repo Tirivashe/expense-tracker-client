@@ -11,7 +11,7 @@ const Dashboard: FC<Props> = () => {
   const isMobile = useMediaQuery('(max-width: 1345px)')
   return (
     <Stack className={ classes.root }>
-      <Search isMobile={isMobile}/>
+      {/* <Search isMobile={isMobile}/> */}
       <CategoriesSummary />
       <LatestTransactions />
       {!isMobile && <Profile />}
