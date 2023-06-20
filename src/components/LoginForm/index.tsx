@@ -11,7 +11,7 @@ import { useStyles } from "./styles";
 type Props = {};
 
 const LoginForm: FC<Props> = () => {
-  const [login, { isSuccess, isError, error }] = useLoginMutation();
+  const [login, { isSuccess, isError, isLoading, error }] = useLoginMutation();
   const { classes } = useStyles();
   const { getInputProps, onSubmit } = useForm<FormCredentials>({
     initialValues: {
@@ -55,7 +55,7 @@ const LoginForm: FC<Props> = () => {
         {isError && error !== undefined && "data" in error && error.status === 403 && (
           <Text size="xs" mt={-10} mb={-10} py={0} color="red">Invalid credentials</Text>
         )}
-        <Button type="submit">Login</Button>
+        <Button type="submit" loading={isLoading}>Login</Button>
       </Stack>
     </form>
   );
