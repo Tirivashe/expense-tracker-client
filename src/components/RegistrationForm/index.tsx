@@ -11,7 +11,7 @@ import { useStyles } from "./styles";
 type Props = {};
 
 const RegistrationForm: FC<Props> = () => {
-  const [register, { isSuccess }] = useRegisterMutation();
+  const [register, { isSuccess, isLoading }] = useRegisterMutation();
   const { classes } = useStyles();
 
   const { getInputProps, onSubmit } = useForm<FormCredentials>({
@@ -53,7 +53,7 @@ const RegistrationForm: FC<Props> = () => {
           required
           {...getInputProps("password")}
         />
-        <Button type="submit">Register</Button>
+        <Button loading={isLoading} type="submit">Register</Button>
       </Stack>
     </form>
   );
