@@ -8,7 +8,7 @@ type Props = {}
 
 const Dashboard: FC<Props> = () => {
   const { classes } = useStyles()
-  const isMobile = useMediaQuery('(max-width: 1345px)')
+  const isMobile = useMediaQuery('(max-width: 800px)')
   return (
     <Stack className={ classes.root }>
       {/* <Search isMobile={isMobile}/> */}

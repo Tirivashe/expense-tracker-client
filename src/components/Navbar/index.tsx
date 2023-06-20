@@ -8,7 +8,7 @@ import { useLogoutMutation } from "../../redux/api/auth/authApiSlice"
 type Props = {}
 
 const AppNavbar: FC<Props> = () => {
-  const isMobile = useMediaQuery("(max-width: 1345px)");
+  const isMobile = useMediaQuery("(max-width: 1200px)");
   const [logout, { isSuccess }] = useLogoutMutation()
 
   const { classes } = useStyles()
@@ -19,7 +19,7 @@ const AppNavbar: FC<Props> = () => {
   }
 
   return (
-    <Navbar width={{ base: 270 }} pt="lg" withBorder={false} hidden={isMobile} hiddenBreakpoint={1345}>
+    <Navbar width={{ base: 170 }} pt="lg" withBorder={false} hidden={isMobile} hiddenBreakpoint={1200}>
       <Stack align="end" sx={{ width: "100%" }} spacing="xl" justify="space-between">
         <Title sx={{ fontFamily: "Nunito", letterSpacing: "1px" }} order={2}>
           Tracker

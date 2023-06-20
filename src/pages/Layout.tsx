@@ -8,7 +8,7 @@ type Props = {};
 const Layout: FC<Props> = () => {
   return (
     <AppShell 
-      navbarOffsetBreakpoint={1345} 
+      navbarOffsetBreakpoint={1200} 
       navbar={<AppNavbar />}
       padding="xl">
       <Outlet />
