@@ -10,6 +10,7 @@ import { DeletingTransactionsDto } from "../../redux/api/dto/delete-transactions
 import { TransactionType } from "../../types";
 
 type Props = {
+  loading: boolean,
   getInputProps: GetInputProps<DeleteTransactionFieldValues>;
   onSubmit: OnSubmit<DeleteTransactionFieldValues>;
   showTransactionsToDelete: MutationTrigger<
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const DeleteTransactionForm: FC<Props> = ({
+  loading,
   getInputProps,
   onSubmit,
   showTransactionsToDelete,
@@ -57,7 +59,7 @@ const DeleteTransactionForm: FC<Props> = ({
             {...getInputProps("to")}
           />
         </Stack>
-        <Button mt={15} type="submit">
+        <Button mt={15} type="submit" loading={loading}>
           Show Transaction
         </Button>
       </form>

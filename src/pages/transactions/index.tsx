@@ -17,7 +17,7 @@ export type DeleteTransactionFieldValues = {
 
 
 const TransactionsPage: FC<Props> = () => {
-  const [ showTransactionsToDelete, { data, isSuccess: isGetDeleteTransactionsSuccess,  } ] = useGetTransactionsToDeleteMutation()
+  const [ showTransactionsToDelete, { data, isSuccess: isGetDeleteTransactionsSuccess, isLoading } ] = useGetTransactionsToDeleteMutation()
   const {
     getInputProps,
     onSubmit,
@@ -38,6 +38,7 @@ const TransactionsPage: FC<Props> = () => {
         getInputProps={getInputProps}
         onSubmit={onSubmit}
         showTransactionsToDelete={showTransactionsToDelete}
+        loading={isLoading}
       />
       {isGetDeleteTransactionsSuccess && data && (
         <DeleteTransactionList

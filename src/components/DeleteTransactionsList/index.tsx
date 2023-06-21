@@ -23,7 +23,7 @@ type Props = {
 };
 
 const DeleteTransactionList: FC<Props> = ({ transactions, formValues, refetch }) => {
-  const [deleteTransaction] = useDeleteTransactionMutation()
+  const [deleteTransaction, { isLoading }] = useDeleteTransactionMutation()
 
   const handleDelete = (id: string) => {
     deleteTransaction(id)
@@ -35,7 +35,7 @@ const DeleteTransactionList: FC<Props> = ({ transactions, formValues, refetch })
       {transactions.map((transaction) => (
         <Group key={transaction.id}>
           <Transaction transaction={transaction} />
-          <Button color="red" onClick={() => handleDelete(transaction.id)}>
+          <Button color="red" loading={isLoading} onClick={() => handleDelete(transaction.id)}>
             <BsTrash size={20} />
           </Button>
         </Group>
